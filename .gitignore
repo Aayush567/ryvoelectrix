@@ -1,0 +1,18 @@
+# Python venv
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local Database
+admin.db
+admin.db-journal
+
+# Environment
+.env
+.flaskenv
+
+# OS Files
+.DS_Store
+Thumbs.db

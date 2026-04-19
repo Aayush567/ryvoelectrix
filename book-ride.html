@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Test Ride | Ryvo Electrix</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <nav class="navbar glass-nav">
+        <div class="logo">
+            <i data-lucide="zap" class="accent-icon" style="margin-right: 8px; width: 22px; height: 22px;"></i>
+            <div style="display:flex; flex-direction:column; align-items:flex-start;">
+                <a href="index.html" style="color:white; text-decoration:none; line-height:1.1;">Ryvo<span class="accent-text">Electrix</span></a>
+                <span style="font-size: 0.55rem; color: #00f0ff; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-top:1px;">Ride the Dragon</span>
+            </div>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="dealership.html">Dealership</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li class="mobile-only">
+                <a href="tel:{{contact_phone}}" style="font-size: 1.1rem; color: #00f0ff; text-transform: none;">
+                    <i data-lucide="phone" style="width: 18px; margin-right: 8px; vertical-align: middle;"></i> {{contact_phone}}
+                </a>
+            </li>
+            <li class="mobile-only" style="margin-top: 1.5rem;">
+                <a href="book-ride.html" class="btn-primary" style="text-align: center; width: 100%; padding: 1rem;">Book Test Ride</a>
+            </li>
+        </ul>
+        <div class="nav-actions">
+            <a href="tel:{{contact_phone}}" class="desktop-only" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.85rem; margin-right: 15px; display: flex; align-items: center;">
+                <i data-lucide="phone" style="color: var(--primary); width: 16px; margin-right: 5px;"></i> {{contact_phone}}
+            </a>
+            <button onclick="location.href='book-ride.html'" class="btn-primary desktop-only">Book Test Ride</button>
+            <div class="nav-toggle" id="navToggle">
+                <i data-lucide="menu"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header fade-up">
+        <h1>Book a <span class="accent-text-gradient">Test Ride</span></h1>
+        <p>Experience the thrill firsthand. Fill out the form below and we'll arrange a ride.</p>
+    </div>
+
+    <section class="fade-up delay-1"
+        style="display:flex; justify-content:center; padding: 0 10%; margin: 0 auto 5rem auto; max-width: 1400px;">
+        <div class="glass-container glass-card" style="width:100%; max-width:800px; padding: 3rem;">
+            <form id="bookRideForm" onsubmit="submitTestRide(event)">
+                <div class="form-group"><label>Your Name</label><input type="text" id="rideName" class="form-control" required></div>
+                <div class="form-group"><label>Phone Number</label><input type="tel" id="ridePhone" class="form-control"
+                        placeholder="+91" required></div>
+                <div class="form-group"><label>Select Model</label>
+                    <select class="form-control" id="modelSelect">
+                        <option value="atom">Ryvo ATOM</option>
+                        <option value="neutron">Ryvo NEUTRON</option>
+                        <option value="elektro">Ryvo ELEKTRO</option>
+                        <option value="eloader">Ryvo E-LOADER</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Preferred Date</label><input type="date" id="rideDate" class="form-control" required>
+                </div>
+                <div class="form-group"><label>City</label><input type="text" id="rideCity" class="form-control" required></div>
+                <button type="submit" id="rideSubmitBtn" class="btn-primary" style="width: 100%; margin-top: 20px; padding: 15px;">Confirm
+                    Test Ride</button>
+                <div id="rideFormMsg" style="margin-top: 15px; text-align: center; display: none;"></div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content" style="text-align: center; padding: 3rem 0;">
+            <div class="logo"
+                style="margin-bottom: 20px; display: inline-flex; align-items: center; justify-content: center;">
+                <i data-lucide="zap" class="accent-icon" style="margin-right: 8px; width: 24px; height: 24px;"></i>
+                <div style="display:flex; flex-direction:column; align-items:flex-start;">
+                    <a href="index.html"
+                        style="color:white; text-decoration:none; line-height:1; font-size:1.4rem; font-weight:800;">Ryvo<span
+                            class="accent-text">Electrix</span></a>
+                    <span
+                        style="font-size: 0.55rem; color: #00f0ff; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-top:1px;">Ride
+                        the Dragon</span>
+                </div>
+            </div>
+            <p>© 2026 Ryvo Electrix Pvt. Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+        // Pre-select model based on URL param
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const model = urlParams.get('model');
+            if (model && document.getElementById('modelSelect').querySelector(`option[value="${model}"]`)) {
+                document.getElementById('modelSelect').value = model;
+            }
+        });
+
+        async function submitTestRide(e) {
+            e.preventDefault();
+            const btn = document.getElementById('rideSubmitBtn');
+            const msg = document.getElementById('rideFormMsg');
+            const originalText = btn.textContent;
+
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+            msg.style.display = 'none';
+
+            const payload = {
+                name: document.getElementById('rideName').value,
+                phone: document.getElementById('ridePhone').value,
+                model: document.getElementById('modelSelect').value,
+                date: document.getElementById('rideDate').value,
+                city: document.getElementById('rideCity').value
+            };
+
+            try {
+                const res = await fetch('/api/submit-query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: 'test-ride', payload: payload })
+                });
+
+                if (res.ok) {
+                    msg.style.display = 'block';
+                    msg.style.color = '#00f0ff';
+                    msg.innerHTML = '✅ Test Ride booked successfully! Our team will contact you shortly.';
+                    document.getElementById('bookRideForm').reset();
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (err) {
+                msg.style.display = 'block';
+                msg.style.color = '#ff4757';
+                msg.innerHTML = '❌ Something went wrong. Please try again or call us directly.';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login - Ryvo</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { background: #080b13; color: white; font-family: 'Outfit'; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background-image: radial-gradient(circle at top right, rgba(0,240,255,0.1), transparent), radial-gradient(circle at bottom left, rgba(0,86,255,0.1), transparent); }
+        .login-card { background: rgba(11, 15, 25, 0.8); padding: 3rem; border-radius: 16px; border: 1px solid rgba(0,240,255,0.2); box-shadow: 0 10px 40px rgba(0,240,255,0.1); width: 100%; max-width: 350px; text-align: center; }
+        .login-card h2 { margin-top: 0; font-size: 2rem; margin-bottom: 2rem; font-weight:800; }
+        .input-group { margin-bottom: 1.5rem; text-align: left; }
+        .input-group label { display: block; margin-bottom: 8px; color: rgba(255,255,255,0.7); font-size:0.9rem; }
+        .input-group input { width: 100%; box-sizing: border-box; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px; font-family: 'Outfit'; transition:0.3s; }
+        .input-group input:focus { outline: none; border-color: #00f0ff; box-shadow: 0 0 10px rgba(0,240,255,0.2); }
+        .btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #00f0ff, #0056ff); color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.3s; font-family:'Outfit'; }
+        .btn:hover { box-shadow: 0 0 20px rgba(0,240,255,0.5); transform: translateY(-2px); }
+        .error { color: #ff4757; font-size: 0.9rem; margin-top: 15px; display: none; background: rgba(255,71,87,0.1); border: 1px solid rgba(255,71,87,0.3); padding: 8px; border-radius:4px; }
+    </style>
+    <script>
+        async function handleLogin(e) {
+            e.preventDefault();
+            document.getElementById('errorMsg').style.display = 'none';
+            const btn = document.getElementById('loginBtn');
+            btn.innerText = "Authenticating...";
+            const res = await fetch('/api/admin-login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: document.getElementById('username').value, password: document.getElementById('password').value})
+            });
+            if (res.ok) window.location.reload();
+            else {
+                document.getElementById('errorMsg').style.display = 'block';
+                btn.innerText = "Access Dashboard";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="login-card">
+        <h2>Ryvo<span style="color:#00f0ff;">Admin</span></h2>
+        <form onsubmit="handleLogin(event)">
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="username" required autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label>Secure Key</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn" id="loginBtn">Access Dashboard</button>
+            <div id="errorMsg" class="error">Invalid Credentials! Access Denied.</div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Admin Panel - Ryvo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { background: #0b0f19; color: white; font-family: 'Outfit'; padding: 3rem; margin: 0; }
+        .card { background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; }
+        tr:hover { background: rgba(255,255,255,0.02); }
+        th { color: #00f0ff; font-weight:600; font-size:1.1rem; border-bottom: 1px solid rgba(0, 240, 255, 0.2); }
+        .tag { background: #00f0ff; color: black; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
+        .tab-btn { background:transparent; color:white; border:none; padding:15px 25px; cursor:pointer; font-size:1.1rem; font-family:'Outfit'; border-bottom: 3px solid transparent; }
+        .tab-btn.active { color:#00f0ff; border-bottom: 3px solid #00f0ff; }
+        .tab-content { display:none; }
+        .tab-content.active { display:block; }
+        .glass-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius:8px;}
+        form input, form select { width: 100%; padding:10px; background:rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.2); color:white; border-radius:6px; font-family:'Outfit'; margin-top:5px; margin-bottom:15px;}
+    </style>
+    <script>
+        function showTab(id) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+        }
+        function toast(msg) {
+            let t = document.createElement('div');
+            t.innerText = msg;
+            t.style.cssText = "position:fixed; bottom:20px; right:20px; background:#00f0ff; color:black; padding:10px 20px; border-radius:5px; font-weight:bold; z-index:1000;";
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+        function filterTable() {
+            const dateVal = document.getElementById("filterDate").value;
+            const searchVal = document.getElementById("filterSearch").value.toLowerCase();
+            const typeVal = document.getElementById("filterType").value.toLowerCase();
+            const statusVal = document.getElementById("filterStatus").value.toLowerCase();
+            const trs = document.getElementById("adminTable").getElementsByTagName("tr");
+            for (let i = 1; i < trs.length; i++) {
+                let tds = trs[i].getElementsByTagName("td");
+                if (tds.length > 0) {
+                    let matchDate = dateVal === "" || tds[0].innerText.startsWith(dateVal);
+                    let txtarea = tds[4].querySelector("textarea");
+                    let matchSearch = tds[2].innerText.toLowerCase().includes(searchVal) || (txtarea && txtarea.value.toLowerCase().includes(searchVal));
+                    let matchType = typeVal === "" || tds[1].innerText.toLowerCase().includes(typeVal);
+                    let rowStatus = tds[3].querySelector("select") ? tds[3].querySelector("select").value.toLowerCase() : "";
+                    let matchStatus = statusVal === "" || rowStatus === statusVal;
+                    trs[i].style.display = (matchDate && matchSearch && matchType && matchStatus) ? "" : "none";
+                }
+            }
+        }
+        // Query APIs
+        async function updateStatus(id, newStatus) { await fetch('/api/update-status', {method: 'POST', body: JSON.stringify({id, status: newStatus})}); toast("Status Updated."); }
+        async function updateRemarks(id, remarks) { await fetch('/api/update-remarks', {method: 'POST', body: JSON.stringify({id, remarks})}); toast("Remarks Saved."); }
+        // Slide APIs
+        async function toggleSlide(id, is_active) { await fetch('/api/admin/slides/toggle', {method: 'POST', body: JSON.stringify({id, is_active: is_active?1:0})}); window.location.reload(); }
+        async function deleteSlide(id) { if(confirm("Delete slide?")) { await fetch('/api/admin/slides/delete', {method: 'POST', body: JSON.stringify({id})}); window.location.reload(); } }
+        // Prod APIs
+        async function toggleProd(id, is_active) { await fetch('/api/admin/products/toggle', {method: 'POST', body: JSON.stringify({id, is_active: is_active?1:0})}); window.location.reload(); }
+        async function deleteProd(id) { if(confirm("Delete product?")) { await fetch('/api/admin/products/delete', {method: 'POST', body: JSON.stringify({id})}); window.location.reload(); } }
+        
+        async function toggleTeam(id, is_active) { await fetch('/api/admin/users/toggle', {method: 'POST', body: JSON.stringify({id, is_active: is_active?1:0})}); window.location.reload(); }
+        async function deleteTeam(id) { if(confirm("Revoke this user's access permanently?")) { await fetch('/api/admin/users/delete', {method: 'POST', body: JSON.stringify({id})}); window.location.reload(); } }
+        async function addTeamObj(e) {
+            e.preventDefault();
+            await fetch('/api/admin/users/add', {
+                method: 'POST', body: JSON.stringify({
+                    username: document.getElementById('subUser').value,
+                    password: document.getElementById('subPass').value
+                })
+            });
+            window.location.reload();
+        }
+
+        async function logout() {
+            await fetch('/api/admin-logout', {method: 'POST'});
+            window.location.href = '/admin';
+        }
+
+        async function addSlide(e) {
+            e.preventDefault();
+            const btn = document.getElementById('slideBtn'); btn.innerText = "Uploading...";
+            const file = document.getElementById('slideImg').files[0];
+            const reader = new FileReader();
+            reader.onload = async () => {
+                await fetch('/api/admin/slides/add', {
+                    method: 'POST', body: JSON.stringify({
+                        title: document.getElementById('slideTitle').value,
+                        subtitle: document.getElementById('slideSub').value,
+                        link_text: document.getElementById('slideBtnText').value,
+                        link_url: document.getElementById('slideLink').value,
+                        image_b64: reader.result
+                    })
+                });
+                window.location.reload();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function addProd(e) {
+            e.preventDefault();
+            const btn = document.getElementById('prodBtn'); btn.innerText = "Uploading...";
+            const file = document.getElementById('prodImg').files[0];
+            const reader = new FileReader();
+            reader.onload = async () => {
+                await fetch('/api/admin/products/add', {
+                    method: 'POST', body: JSON.stringify({
+                        name: document.getElementById('prodName').value,
+                        range: document.getElementById('prodRange').value,
+                        speed: document.getElementById('prodSpeed').value,
+                        extra: document.getElementById('prodExtra').value,
+                        price: document.getElementById('prodPrice').value,
+                        badge: document.getElementById('prodBadge').value,
+                        image_b64: reader.result
+                    })
+                });
+                window.location.reload();
+            };
+            reader.readAsDataURL(file);
+        }
+        async function updateSettings(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button'); btn.innerText = "Saving...";
+            await fetch('/api/admin/settings/update', {
+                method: 'POST', body: JSON.stringify({
+                    contact_phone: document.getElementById('setPhone').value,
+                    contact_email: document.getElementById('setEmail').value,
+                    address_footer: document.getElementById('setAddrFooter').value,
+                    address_contact: document.getElementById('setAddrContact').value
+                })
+            });
+            window.location.reload();
+        }
+    </script>
+</head>
+<body>
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h2 style="margin-top:0;">Ryvo Electrix <span style="color:#00f0ff;">CMS System</span></h2>
+            <button onclick="logout()" style="background:transparent; color:#ff4757; border:1px solid #ff4757; padding:8px 15px; border-radius:4px; font-family:'Outfit'; cursor:pointer;">Logout</button>
+        </div>
+
+        <div style="display:flex; border-bottom:1px solid rgba(0,240,255,0.2); margin-bottom:20px; flex-wrap:wrap;">
+            <button onclick="showTab('queries')" class="tab-btn active">Live Queries</button>
+            <button onclick="showTab('slides')" class="tab-btn">Manage Slider</button>
+            <button onclick="showTab('products')" class="tab-btn">Manage Products</button>
+            <button onclick="showTab('settings')" class="tab-btn">Settings</button>
+            {team_tab_btn}
+        </div>
+
+        <div id="queries" class="tab-content active">
+            <div style="display:flex; gap:15px; margin-bottom:20px; flex-wrap:wrap;">
+                <input type="date" id="filterDate" onchange="filterTable()" style="padding:10px; background:rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.2); color:white; border-radius:6px; font-family:'Outfit'; outline:none; color-scheme:dark; cursor:pointer;" title="Filter by Date">
+                <input type="text" id="filterSearch" placeholder="🔍 Search Details or Notes..." onkeyup="filterTable()" style="flex:1; min-width:200px; padding:10px; background:rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.2); color:white; border-radius:6px; font-family:'Outfit'; outline:none;">
+                <select id="filterType" onchange="filterTable()" style="padding:10px; background:rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.2); color:white; border-radius:6px; font-family:'Outfit'; outline:none; cursor:pointer;">
+                    <option value="">All Categories</option>
+                    <option value="test ride">Test Ride Booking</option>
+                    <option value="dealership">Dealership Application</option>
+                    <option value="general">General Inquiry</option>
+                </select>
+                <select id="filterStatus" onchange="filterTable()" style="padding:10px; background:rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.2); color:white; border-radius:6px; font-family:'Outfit'; outline:none; cursor:pointer;">
+                    <option value="">All Statuses</option>
+                    <option value="pending">Pending</option>
+                    <option value="resolved">Resolved</option>
+                    <option value="discarded">Discarded</option>
+                </select>
+            </div>
+            <table id="adminTable">
+                <tr><th>Timestamp</th><th>Type</th><th>Customer Details</th><th>Status</th><th>Remarks</th></tr>
+                {rows_html}
+            </table>
+        </div>
+
+        <div id="slides" class="tab-content">
+            <div style="display:flex; gap:30px;">
+                <div style="flex:1;">
+                    <h3>Add New Slide</h3>
+                    <form onsubmit="addSlide(event)" class="glass-card" style="padding:20px;">
+                        <label>Image File (1920x1080 recommended)</label>
+                        <input type="file" id="slideImg" accept="image/*" required>
+                        <label>Title (HTML allowed)</label>
+                        <input type="text" id="slideTitle" placeholder="Electrify your <span class='accent-text-gradient'>Journey</span>" required>
+                        <label>Subtitle Text</label>
+                        <input type="text" id="slideSub" placeholder="Description..." required>
+                        <label>Button Text</label>
+                        <input type="text" id="slideBtnText" placeholder="Book Test Ride" required>
+                        <label>Button Link</label>
+                        <input type="text" id="slideLink" placeholder="products.html or #" required>
+                        <button type="submit" id="slideBtn" style="background:#00f0ff; color:black; font-weight:bold; padding:10px 20px; border:none; border-radius:4px; width:100%; cursor:pointer;">Upload Slide</button>
+                    </form>
+                </div>
+                <div style="flex:1;">
+                    <h3>Live Slides</h3>
+                    {slides_html}
+                </div>
+            </div>
+        </div>
+
+        <div id="products" class="tab-content">
+            <div style="display:flex; gap:30px;">
+                <div style="flex:1;">
+                    <h3>Add New Product</h3>
+                    <form onsubmit="addProd(event)" class="glass-card" style="padding:20px;">
+                        <label>Vehicle Image (Transparent PNG)</label>
+                        <input type="file" id="prodImg" accept="image/*" required>
+                        <label>Vehicle Name</label>
+                        <input type="text" id="prodName" placeholder="Ryvo ATOM" required>
+                        <label>Range (e.g. 100km)</label>
+                        <input type="text" id="prodRange" required>
+                        <label>Speed (e.g. 25 km/h)</label>
+                        <input type="text" id="prodSpeed" required>
+                        <label>Extra Selling Point (e.g. No License)</label>
+                        <input type="text" id="prodExtra" required>
+                        <label>Price (e.g. ₹65,000)</label>
+                        <input type="text" id="prodPrice" required>
+                        <label>Badge text (optional, e.g. Best Seller)</label>
+                        <input type="text" id="prodBadge">
+                        <button type="submit" id="prodBtn" style="background:#00f0ff; color:black; font-weight:bold; padding:10px 20px; border:none; border-radius:4px; width:100%; cursor:pointer;">Publish Product</button>
+                    </form>
+                </div>
+                <div style="flex:1;">
+                    <h3>Live Products</h3>
+                    {prods_html}
+                </div>
+            </div>
+        </div>
+
+        {team_tab_content}
+        {settings_txt}
+    </div>
+</body>
+</html>

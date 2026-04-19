@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ryvo Electrix | Future of Green Mobility</title>
+    <meta name="description"
+        content="Ryvo Electrix - Premium electric scooters with up to 125km range. No license required. Book a test ride today.">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar glass-nav">
+        <div class="logo">
+            <i data-lucide="zap" class="accent-icon" style="margin-right: 8px; width: 22px; height: 22px;"></i>
+            <div style="display:flex; flex-direction:column; align-items:flex-start;">
+                <a href="index.html" style="color:white; text-decoration:none; line-height:1.1;">Ryvo<span class="accent-text">Electrix</span></a>
+                <span style="font-size: 0.55rem; color: #00f0ff; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-top:1px;">Ride the Dragon</span>
+            </div>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html" class="accent-text">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="dealership.html">Dealership</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li class="mobile-only">
+                <a href="tel:{{contact_phone}}" style="font-size: 1.1rem; color: #00f0ff; text-transform: none;">
+                    <i data-lucide="phone" style="width: 18px; margin-right: 8px; vertical-align: middle;"></i> {{contact_phone}}
+                </a>
+            </li>
+            <li class="mobile-only" style="margin-top: 1.5rem;">
+                <a href="book-ride.html" class="btn-primary" style="text-align: center; width: 100%; padding: 1rem;">Book Test Ride</a>
+            </li>
+        </ul>
+        <div class="nav-actions">
+            <a href="tel:{{contact_phone}}" class="desktop-only" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.85rem; margin-right: 15px; display: flex; align-items: center;">
+                <i data-lucide="phone" style="color: var(--primary); width: 16px; margin-right: 5px;"></i> {{contact_phone}}
+            </a>
+            <button onclick="location.href='book-ride.html'" class="btn-primary desktop-only">Book Test Ride</button>
+            <div class="nav-toggle" id="navToggle">
+                <i data-lucide="menu"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Slider Section -->
+    <section id="home" class="hero-slider">
+        <div class="slides-container">
+            <!-- DYNAMIC_SLIDES -->
+        </div>
+        <div class="slider-controls">
+            <button id="prevSlide"><i data-lucide="chevron-left"></i></button>
+            <button id="nextSlide"><i data-lucide="chevron-right"></i></button>
+        </div>
+        <div class="slider-dots"></div>
+    </section>
+
+    <!-- Models Section -->
+    <section id="models" class="models-section">
+        <div class="section-header text-center" style="margin-bottom: 3rem;">
+            <h2 class="section-title">Our <span class="accent-text">Products</span></h2>
+            <h3 style="font-size: 1.5rem; margin-bottom: 10px;">Low-Speed Electric Scooters - No License Required</h3>
+            <p style="color: var(--text-muted); max-width: 800px; margin: 0 auto; line-height: 1.6;">Eco-friendly
+                electric scooters under 25 km/h | No RTO registration | No driving license needed | 3-year battery
+                warranty | Free delivery across India</p>
+        </div>
+        <div class="model-grid">
+            <!-- DYNAMIC_PRODUCTS -->
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works-section">
+        <div class="section-header text-center">
+            <span class="section-tag fade-up"><i data-lucide="play-circle" style="width:16px; height:16px;"></i> Simple
+                Process</span>
+            <h2 class="section-title fade-up">How It <span class="accent-text">Works</span></h2>
+            <p class="section-subtitle fade-up">Getting your dream electric vehicle is just 4 simple steps away</p>
+        </div>
+        <div class="steps-timeline fade-up">
+            <div class="step-item">
+                <div class="step-icon-wrap">
+                    <div class="step-icon-box"><i data-lucide="eye"></i></div>
+                    <div class="step-number">1</div>
+                </div>
+                <h4>Choose Your Ride</h4>
+                <p>Browse our range and select your perfect EV</p>
+            </div>
+            <div class="step-item">
+                <div class="step-icon-wrap">
+                    <div class="step-icon-box"><i data-lucide="bike"></i></div>
+                    <div class="step-number">2</div>
+                </div>
+                <h4>Book Test Ride</h4>
+                <p>Experience the vehicle before you buy</p>
+            </div>
+            <div class="step-item">
+                <div class="step-icon-wrap">
+                    <div class="step-icon-box"><i data-lucide="indian-rupee"></i></div>
+                    <div class="step-number">3</div>
+                </div>
+                <h4>Easy Financing</h4>
+                <p>Flexible EMI options available for all</p>
+            </div>
+            <div class="step-item">
+                <div class="step-icon-wrap">
+                    <div class="step-icon-box"><i data-lucide="truck"></i></div>
+                    <div class="step-number">4</div>
+                </div>
+                <h4>Doorstep Delivery</h4>
+                <p>Get your EV delivered to your home</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Ryvo Electrix Section -->
+    <section id="why-choose" class="why-choose-section">
+        <div class="section-header text-center">
+            <span class="section-tag fade-up"><i data-lucide="award" style="width:16px; height:16px;"></i> Why
+                Ryvo</span>
+            <h2 class="section-title fade-up">Why Choose <span class="accent-text">Ryvo Electrix</span>?</h2>
+            <p class="section-subtitle fade-up">We're committed to providing the best electric mobility experience</p>
+        </div>
+        <div class="why-choose-grid">
+            <div class="why-card fade-up" style="--card-accent: #3b82f6;">
+                <div class="why-card-icon" style="background: rgba(59,130,246,0.15); color: #3b82f6;"><i
+                        data-lucide="shield-check"></i></div>
+                <h4>Quality Certified</h4>
+                <p>Every vehicle undergoes rigorous quality checks meeting international safety standards.</p>
+            </div>
+            <div class="why-card fade-up delay-1" style="--card-accent: #22c55e;">
+                <div class="why-card-icon" style="background: rgba(34,197,94,0.15); color: #22c55e;"><i
+                        data-lucide="indian-rupee"></i></div>
+                <h4>Best Value</h4>
+                <p>Premium features at competitive prices. Save thousands on fuel costs every month.</p>
+            </div>
+            <div class="why-card fade-up delay-2" style="--card-accent: #f97316;">
+                <div class="why-card-icon" style="background: rgba(249,115,22,0.15); color: #f97316;"><i
+                        data-lucide="wrench"></i></div>
+                <h4>Easy Service</h4>
+                <p>Pan-India service network with readily available spare parts and trained technicians.</p>
+            </div>
+            <div class="why-card fade-up" style="--card-accent: #a855f7;">
+                <div class="why-card-icon" style="background: rgba(168,85,247,0.15); color: #a855f7;"><i
+                        data-lucide="headphones"></i></div>
+                <h4>24/7 Support</h4>
+                <p>Round-the-clock customer support via call, email, or WhatsApp for all your queries.</p>
+            </div>
+            <div class="why-card fade-up delay-1" style="--card-accent: #14b8a6;">
+                <div class="why-card-icon" style="background: rgba(20,184,166,0.15); color: #14b8a6;"><i
+                        data-lucide="package-check"></i></div>
+                <h4>Free Delivery</h4>
+                <p>Doorstep delivery with complete installation and demo at no extra cost.</p>
+            </div>
+            <div class="why-card fade-up delay-2" style="--card-accent: #ef4444;">
+                <div class="why-card-icon" style="background: rgba(239,68,68,0.15); color: #ef4444;"><i
+                        data-lucide="badge-check"></i></div>
+                <h4>3 Year Warranty</h4>
+                <p>Comprehensive warranty coverage on battery and motor for complete peace of mind.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Counter Section -->
+    <section id="stats" class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item fade-up">
+                <div class="stat-value-row">
+                    <div class="stat-number" data-target="1000">0</div>
+                    <span class="stat-plus">+</span>
+                </div>
+                <p>Happy Customers</p>
+            </div>
+            <div class="stat-item fade-up delay-1">
+                <div class="stat-value-row">
+                    <div class="stat-number" data-target="100">0</div>
+                    <span class="stat-plus">+</span>
+                </div>
+                <p>Dealer Network</p>
+            </div>
+            <div class="stat-item fade-up delay-2">
+                <div class="stat-value-row">
+                    <div class="stat-number" data-target="10">0</div>
+                    <span class="stat-plus">+</span>
+                </div>
+                <p>States Coverage</p>
+            </div>
+            <div class="stat-item fade-up delay-3">
+                <div class="stat-value-row">
+                    <span class="stat-star"><i data-lucide="star"
+                            style="width:22px; height:22px; fill: #facc15; color: #facc15;"></i></span>
+                    <div class="stat-number">4.9</div>
+                </div>
+                <p>Customer Rating</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="section-header text-center">
+            <span class="section-tag fade-up"><i data-lucide="star"
+                    style="width:16px; height:16px; fill:#facc15; color:#facc15;"></i> Customer Love</span>
+            <h2 class="section-title fade-up">What Our <span class="accent-text">Customers</span> Say</h2>
+            <div class="testimonials-rating-row fade-up">
+                <div class="stars-row">
+                    <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;color:#facc15;"></i>
+                    <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;color:#facc15;"></i>
+                    <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;color:#facc15;"></i>
+                    <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;color:#facc15;"></i>
+                    <i data-lucide="star" style="width:16px;height:16px;fill:#facc15;color:#facc15;"></i>
+                </div>
+                <strong style="color:white;">4.9</strong> from 500+ reviews
+            </div>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card fade-up">
+                <div class="testimonial-stars">
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                </div>
+                <p class="testimonial-text">"Switched from petrol scooter to Ryvo. Saving over ₹3000/month on fuel! The
+                    range is excellent and charging is super convenient."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">RK</div>
+                    <div>
+                        <strong>Rajesh Kumar</strong>
+                        <span><i data-lucide="map-pin" style="width:11px;height:11px;"></i> Delhi</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card fade-up delay-1">
+                <div class="testimonial-stars">
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                </div>
+                <p class="testimonial-text">"As a working professional, I needed something reliable for daily commute.
+                    Ryvo is perfect — stylish, eco-friendly, and zero maintenance hassle!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">PS</div>
+                    <div>
+                        <strong>Priya Sharma</strong>
+                        <span><i data-lucide="map-pin" style="width:11px;height:11px;"></i> Mumbai</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card fade-up delay-2">
+                <div class="testimonial-stars">
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                </div>
+                <p class="testimonial-text">"Bought Ryvo for my parents. They love how easy it is to ride without
+                    needing a license. Great for senior citizens and beginners!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MA</div>
+                    <div>
+                        <strong>Mohammed Ali</strong>
+                        <span><i data-lucide="map-pin" style="width:11px;height:11px;"></i> Jaipur</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card fade-up delay-3">
+                <div class="testimonial-stars">
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                    <i data-lucide="star" class="star-filled"></i>
+                </div>
+                <p class="testimonial-text">"Ryvo ATOM PRO has the best range in its class. I travel 40km daily and
+                    charge only twice a week. Absolutely love it!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AD</div>
+                    <div>
+                        <strong>Anita Desai</strong>
+                        <span><i data-lucide="map-pin" style="width:11px;height:11px;"></i> Bangalore</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta-section">
+        <div class="cta-content fade-up">
+            <h2>Ready to Join the <span class="accent-text-gradient">Electric Revolution</span>?</h2>
+            <p>Experience the future of mobility — zero emissions, maximum savings, pure riding joy.</p>
+            <div class="cta-buttons">
+                <a href="products.html" class="btn-primary" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Explore
+                    Scooters</a>
+                <button onclick="openTestRideModal()" class="btn-outline"
+                    style="font-size: 1.1rem; padding: 1rem 2.5rem;">Book Test Ride</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo" style="margin-bottom: 20px;">
+                    <i data-lucide="zap" class="accent-icon" style="margin-right: 8px; width: 24px; height: 24px;"></i>
+                    <div style="display:flex; flex-direction:column; align-items:flex-start;">
+                        <a href="index.html" style="color:white; text-decoration:none; line-height:1; font-size:1.4rem; font-weight:800;">Ryvo<span class="accent-text">Electrix</span></a>
+                        <span style="font-size: 0.55rem; color: #00f0ff; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-top:1px;">Ride the Dragon</span>
+                    </div>
+                </div>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">Bringing world-class
+                    electric vehicles to India, promoting sustainable development through green mobility and renewable
+                    energy.</p>
+                <div class="badge"
+                    style="display:inline-block; border: 1px solid var(--primary); color: white; background: rgba(0,0,0,0.3);">
+                    AI-Powered Solutions</div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="dealership.html">Dealership</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Our Products</h3>
+                <ul class="footer-links">
+                    <li><a href="products.html">Ryvo ATOM</a></li>
+                    <li><a href="products.html">Ryvo ATOM PRO</a></li>
+                    <li><a href="products.html">Ryvo ELECTRO</a></li>
+                    <li><a href="products.html">Ryvo NEUTRON PRO</a></li>
+                    <li><a href="products.html">Ryvo POLO</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Policies</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Shipping & Delivery</a></li>
+                    <li><a href="#">Cancellation & Refund</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p style="color: var(--text-muted); margin-bottom: 15px; line-height: 1.6;">{{address_footer}}</p>
+                <p style="margin-bottom: 10px;"><strong style="color:white; display:block; margin-bottom:3px;">Sales &
+                        Support</strong><a href="tel:{{contact_phone}}"
+                        style="color: var(--primary); text-decoration: none;">{{contact_phone}}</a></p>
+                <p><strong style="color:white; display:block; margin-bottom:3px;">Email Us</strong><a
+                        href="mailto:{{contact_email}}"
+                        style="color: var(--primary); text-decoration: none;">{{contact_email}}</a></p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>© 2026 Ryvo Electrix Pvt. Ltd. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <span style="color: white; font-weight:600;"><i data-lucide="zap"
+                            style="width:12px; height:12px; color:var(--primary);"></i> 100% Electric</span>
+                    &nbsp;|&nbsp;
+                    <span style="color: white; font-weight:600;"><i data-lucide="leaf"
+                            style="width:12px; height:12px; color:var(--primary);"></i> Zero Emissions</span>
+                    &nbsp;|&nbsp;
+                    <a href="#">Shipping</a> &nbsp;|&nbsp;
+                    <a href="#">Refund</a> &nbsp;|&nbsp;
+                    <a href="#">Privacy</a> &nbsp;|&nbsp;
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Test Ride Pop-Up Modal -->
+    <div id="testRideModal" class="modal-overlay" style="display: none;">
+        <div class="glass-container glass-card"
+            style="position: relative; max-width: 500px; width: 90%; padding: 2.5rem; margin:auto;">
+            <button onclick="document.getElementById('testRideModal').style.display='none'"
+                style="position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: white; cursor: pointer;"><i
+                    data-lucide="x"></i></button>
+            <h2 style="margin-bottom: 20px; font-size: 1.8rem; text-align: center;">Book <span
+                    class="accent-text-gradient">Test Ride</span></h2>
+            <form onsubmit="submitForm(event, 'Test Ride Booking')">
+                <div class="form-group"><label>Your Name</label><input type="text" class="form-control" required></div>
+                <div class="form-group"><label>Phone Number</label><input type="tel" class="form-control"
+                        placeholder="+91" required></div>
+                <div class="form-group"><label>Select Model</label>
+                    <select class="form-control" id="modalModelSelect">
+                        <option value="atom">Ryvo ATOM</option>
+                        <option value="neutron">Ryvo NEUTRON</option>
+                        <option value="elektro">Ryvo ELEKTRO</option>
+                        <option value="eloader">Ryvo E-LOADER</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Preferred Date</label><input type="date" class="form-control" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 5px;"><label>Message (Optional)</label><textarea
+                        class="form-control" rows="2" placeholder="Any specific requirements?"></textarea></div>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 15px; padding: 15px;">Confirm
+                    Test Ride</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
